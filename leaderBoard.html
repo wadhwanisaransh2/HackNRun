@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leaderboard - HackNRun</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Montserrat:wght@700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    
+    <style>
+        /* ==========================================================================
+            1. SETUP & GLOBALS
+            ========================================================================== */
+        :root {
+            /* Color Scheme */
+            --primary: #4e32d5;      /* Deep Violet */
+            --primary-light: #7259f9;  /* Lavender */
+            --accent: #ff478c;       /* Hot Pink */
+            --secondary: #00bcd4;    /* Vibrant Teal */
+            --tertiary: #1b006a;       /* Darkest Violet */
+            --white: #ffffff;
+            --dark: #1f014b;           /* Dark text for contrast */
+            --text-light: rgba(255, 255, 255, 0.9);
+            --text-muted: rgba(255, 255, 255, 0.7);
+
+            /* NEW: Enhanced Background Colors for animation */
+            --bg-start: #0a001a; /* Darker background start */
+            --bg-end: #10003a;   /* Darker background end */
+            --anim-color-1: #4e32d5;
+            --anim-color-2: #ff478c;
+            --anim-color-3: #00bcd4;
+            
+            /* Background Colors */
+            --bg-gradient: linear-gradient(135deg, var(--bg-start) 0%, var(--bg-end) 100%);
+            --card-bg: rgba(255, 255, 255, 0.15); /* Increased visibility for all cards */
+            --progress-card-bg: rgba(0, 0, 0, 0.2); 
+            --border-color: rgba(255, 255, 255, 0.2);
+            --skill-bg: rgba(255, 255, 255, 0.1);
+            
+            /* Podium Colors */
+            --gold: #FFD700;
+            --silver: #C0C0C0;
+            --bronze: #CD7F32;
+
+            /* Sizing */
+            --header-height: 90px;
+            --card-border-radius: 20px;
+            --main-container-width: 1300px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Poppins", sans-serif;
+            font-weight: 400;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background: var(--bg-gradient);
+            color: var(--text-light);
+            overflow-x: hidden;
+            line-height: 1.6;
+            position: relative;
+        }
+        
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background:
+                radial-gradient(circle at top left, var(--anim-color-1) 0%, transparent 20%),
+                radial-gradient(circle at bottom right, var(--anim-color-2) 0%, transparent 20%),
+                radial-gradient(circle at center, var(--anim-color-3) 0%, transparent 20%);
+            background-size: 150% 150%;
+            animation: background-pan 30s ease-in-out infinite;
+            z-index: -2;
+            opacity: 0.2;
+        }
+
+        @keyframes background-pan {
+            0% { background-position: 0% 0%; }
+            25% { background-position: 50% 100%; }
+            50% { background-position: 100% 0%; }
+            75% { background-position: 50% 0%; }
+            100% { background-position: 0% 0%; }
+        }
+
+        h1, h2, h3, h4 {
+            font-family: "Montserrat", sans-serif;
+            color: var(--white);
+            font-weight: 700;
+        }
+
+        a {
+            text-decoration: none;
+            color: var(--white);
+            transition: color 0.3s ease;
+        }
+
+        a:hover {
+            color: var(--accent);
+        }
+
+        #particles-js {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+
+        /* ==========================================================================
+            2. HEADER & NAVIGATION
+            ========================================================================== */
+        header {
+            background: rgba(27, 0, 106, 0.7);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            position: fixed;
+            width: 100%;
+            z-index: 1000;
+            height: var(--header-height);
+            display: flex;
+            align-items: center;
+            transition: all 0.4s ease;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: var(--main-container-width);
+            margin: 0 auto;
+            padding: 0 2rem;
+            width: 100%;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            text-decoration: none;
+            flex-shrink: 0;
+        }
+        
+        .logo h1 {
+            color: var(--white);
+            font-size: 2.5rem;
+            font-weight: 900;
+        }
+        
+        .logo-icon-container {
+            width: 45px;
+            height: 45px;
+            background: linear-gradient(135deg, var(--primary-light), var(--secondary));
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .logo-icon-container .fa-graduation-cap {
+            color: var(--white);
+            font-size: 1.8rem;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 1rem;
+        }
+        
+        nav ul li a {
+            color: var(--white);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            padding: 0.7rem 1.2rem;
+            border-radius: 30px;
+            transition: background-color 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        nav ul li a:hover, nav ul li a.active {
+            background-color: rgba(255, 255, 255, 0.15);
+        }
+
+        /* ==========================================================================
+            3. LEADERBOARD PAGE STYLES - ENHANCED
+            ========================================================================== */
+        .leaderboard-page {
+            padding-top: calc(var(--header-height) + 4rem);
+            padding-bottom: 4rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .leaderboard-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            text-align: center;
+        }
+
+        .leaderboard-title {
+            color: var(--white);
+            font-size: 4rem;
+            margin-bottom: 2rem;
+            text-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            background: linear-gradient(135deg, var(--primary-light), var(--accent));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .podium {
+            display: flex;
+            justify-content: center;
+            align-items: flex-end;
+            gap: 2rem;
+            margin-bottom: 4rem;
+        }
+
+        .podium-card {
+            background: var(--card-bg); /* Use the new, more visible card background variable */
+            border: 2px solid;
+            border-radius: 20px;
+            padding: 2rem 1.5rem;
+            backdrop-filter: blur(12px);
+            color: var(--white);
+            text-align: center;
+            width: 250px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+        }
+        
+        .podium-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.4);
+        }
+        
+        .podium-card.rank-1 {
+            order: 2;
+            transform: scale(1.15) translateY(-20px);
+            border-color: var(--gold);
+            z-index: 10;
+            background: rgba(255, 215, 0, 0.2); /* A little less opaque gold background */
+            box-shadow: 0 0 25px rgba(255, 215, 0, 0.5);
+        }
+        .podium-card.rank-1:hover {
+            transform: scale(1.2) translateY(-30px);
+            box-shadow: 0 0 40px rgba(255, 215, 0, 0.8);
+        }
+        
+        .podium-card.rank-2 {
+            order: 1;
+            border-color: var(--silver);
+            background: rgba(192, 192, 192, 0.2); /* Increased opacity */
+        }
+        .podium-card.rank-3 {
+            order: 3;
+            border-color: var(--bronze);
+            background: rgba(205, 127, 50, 0.2); /* Increased opacity */
+        }
+
+        .podium-avatar {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid;
+            margin: 0 auto 1rem;
+            transition: border-color 0.3s ease;
+        }
+        
+        .podium-card.rank-1 .podium-avatar { border-color: var(--gold); }
+        .podium-card.rank-2 .podium-avatar { border-color: var(--silver); }
+        .podium-card.rank-3 .podium-avatar { border-color: var(--bronze); }
+        .podium-card:hover .podium-avatar { transform: scale(1.1); }
+
+
+        .podium-card h3 {
+            color: var(--white);
+            font-size: 1.5rem;
+            margin-bottom: 0.25rem;
+        }
+        
+        .podium-card .score {
+            font-size: 1.6rem;
+            font-weight: 600;
+            background: linear-gradient(90deg, var(--secondary), var(--accent));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        
+        .podium-crown {
+            font-size: 2.5rem;
+            position: absolute;
+            top: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            opacity: 0.8;
+            filter: drop-shadow(0 0 5px);
+        }
+        .rank-1 .podium-crown { color: var(--gold); filter: drop-shadow(0 0 8px var(--gold)); }
+        .rank-2 .podium-crown { color: var(--silver); filter: drop-shadow(0 0 8px var(--silver)); }
+        .rank-3 .podium-crown { color: var(--bronze); filter: drop-shadow(0 0 8px var(--bronze)); }
+
+
+        /* Main Leaderboard List */
+        .leaderboard-list {
+            background: var(--card-bg); /* Use the new, more visible card background variable */
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 25px;
+            padding: 1.5rem;
+            backdrop-filter: blur(12px);
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .list-item {
+            display: flex;
+            align-items: center;
+            padding: 1rem;
+            margin-bottom: 0.5rem;
+            border-radius: 15px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .list-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .list-item:hover {
+            background: rgba(255, 255, 255, 0.25); /* Increased hover opacity */
+            transform: scale(1.02);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .list-item .rank {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--secondary);
+            width: 50px;
+            flex-shrink: 0;
+        }
+
+        .list-item .user-details {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            flex-grow: 1;
+        }
+        
+        .list-item .avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid var(--primary-light);
+        }
+        
+        .list-item .name {
+            color: var(--white);
+            font-size: 1.2rem;
+            font-weight: 500;
+        }
+
+        .list-item .score {
+            font-size: 1.4rem;
+            font-weight: bold;
+            background: linear-gradient(90deg, var(--accent), var(--secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            flex-shrink: 0;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 71, 140, 0.2);
+        }
+        
+        /* --- Responsive Design --- */
+        @media (max-width: 768px) {
+            .leaderboard-title {
+                font-size: 2.5rem;
+            }
+            .podium {
+                flex-direction: column;
+                align-items: center;
+                gap: 3rem;
+            }
+            .podium-card { width: 100%; }
+            .podium-card.rank-1 {
+                order: 1;
+                transform: scale(1.1) translateY(0);
+            }
+            .podium-card.rank-2 { order: 2; }
+            .podium-card.rank-3 { order: 3; }
+        }
+    </style>
+</head>
+<body>
+    
+    <div id="particles-js"></div>
+
+    <header>
+        <div class="header-container">
+            <a href="index.html" class="logo">
+                <div class="logo-icon-container">
+                    <i class="fas fa-graduation-cap"></i>
+                </div>
+                <h1>HackNRun</h1>
+            </a>
+            
+            <nav id="main-nav">
+                <ul>
+                    <li><a href="home.html">Home</a></li>
+                    <li><a href="profile.html">My Profile</a></li>
+                    <li><a href="#" class="active">Leaderboard</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main class="leaderboard-page">
+        <div class="leaderboard-container">
+            <h2 class="leaderboard-title" data-aos="fade-up">Top Scholars</h2>
+
+            <div class="podium" data-aos="fade-up" data-aos-delay="200">
+                <div class="podium-card rank-2">
+                    <i class="fas fa-crown podium-crown"></i>
+                    <img src="https://i.pravatar.cc/150?u=a" alt="Priya Mehta" class="podium-avatar">
+                    <h3>Priya Mehta</h3>
+                    <p class="score">18,500 PTS</p>
+                </div>
+                <div class="podium-card rank-1">
+                    <i class="fas fa-crown podium-crown"></i>
+                    <img src="https://i.pravatar.cc/150?u=b" alt="Rahul Sharma" class="podium-avatar">
+                    <h3>Rahul Sharma</h3>
+                    <p class="score">21,200 PTS</p>
+                </div>
+                <div class="podium-card rank-3">
+                    <i class="fas fa-crown podium-crown"></i>
+                    <img src="https://i.pravatar.cc/150?u=c" alt="Anjali Patel" class="podium-avatar">
+                    <h3>Anjali Patel</h3>
+                    <p class="score">17,900 PTS</p>
+                </div>
+            </div>
+
+            <div class="leaderboard-list" data-aos="fade-up" data-aos-delay="400">
+                <div class="list-item">
+                    <span class="rank">4</span>
+                    <div class="user-details">
+                        <img src="https://i.pravatar.cc/150?u=d" alt="Suresh Kumar" class="avatar">
+                        <span class="name">Suresh Kumar</span>
+                    </div>
+                    <span class="score">16,300 PTS</span>
+                </div>
+                <div class="list-item">
+                    <span class="rank">5</span>
+                    <div class="user-details">
+                        <img src="https://i.pravatar.cc/150?u=e" alt="Vikram Singh" class="avatar">
+                        <span class="name">Vikram Singh</span>
+                    </div>
+                    <span class="score">15,800 PTS</span>
+                </div>
+                <div class="list-item">
+                    <span class="rank">6</span>
+                    <div class="user-details">
+                        <img src="https://i.pravatar.cc/150?u=f" alt="Meena Kumari" class="avatar">
+                        <span class="name">Meena Kumari</span>
+                    </div>
+                    <span class="score">14,950 PTS</span>
+                </div>
+                <div class="list-item">
+                    <span class="rank">7</span>
+                    <div class="user-details">
+                        <img src="https://i.pravatar.cc/150?u=g" alt="Ravi Gupta" class="avatar">
+                        <span class="name">Ravi Gupta</span>
+                    </div>
+                    <span class="score">14,200 PTS</span>
+                </div>
+                <div class="list-item">
+                    <span class="rank">8</span>
+                    <div class="user-details">
+                        <img src="https://i.pravatar.cc/150?u=h" alt="Sunita Devi" class="avatar">
+                        <span class="name">Sunita Devi</span>
+                    </div>
+                    <span class="score">13,500 PTS</span>
+                </div>
+                <div class="list-item">
+                    <span class="rank">9</span>
+                    <div class="user-details">
+                        <img src="https://i.pravatar.cc/150?u=i" alt="Arjun Reddy" class="avatar">
+                        <span class="name">Arjun Reddy</span>
+                    </div>
+                    <span class="score">12,800 PTS</span>
+                </div>
+                <div class="list-item">
+                    <span class="rank">10</span>
+                    <div class="user-details">
+                        <img src="https://i.pravatar.cc/150?u=j" alt="Kavita Choudhary" class="avatar">
+                        <span class="name">Kavita Choudhary</span>
+                    </div>
+                    <span class="score">12,100 PTS</span>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            AOS.init({ duration: 800, once: true });
+        
+            if (document.getElementById('particles-js')) {
+                particlesJS('particles-js', {
+                    "particles": { "number": { "value": 80, "density": { "enable": true, "value_area": 800 } }, "color": { "value": "#ffffff" }, "shape": { "type": "circle" }, "opacity": { "value": 0.5, "random": false }, "size": { "value": 3, "random": true }, "line_linked": { "enable": true, "distance": 150, "color": "#ffffff", "opacity": 0.4, "width": 1 }, "move": { "enable": true, "speed": 6, "direction": "none", "random": false, "straight": false, "out_mode": "out" } },
+                    "interactivity": { "detect_on": "canvas", "events": { "onhover": { "enable": true, "mode": "repulse" }, "onclick": { "enable": true, "mode": "push" } } },
+                    "retina_detect": true
+                });
+            }
+        });
+    </script>
+</body>
+</html>
