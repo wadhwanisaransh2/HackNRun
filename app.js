@@ -98,7 +98,27 @@ mobileMenuBtn.addEventListener('click', () => {
         icon.classList.add('fa-bars');
     }
 });
+ document.addEventListener('DOMContentLoaded', function() {
+            const profileTrigger = document.querySelector('.profile-trigger');
+            const dropdownMenu = document.querySelector('.dropdown-menu');
 
+            if (profileTrigger && dropdownMenu) {
+                // Toggle dropdown on click
+                profileTrigger.addEventListener('click', (event) => {
+                    event.stopPropagation(); // Prevents the window click listener from firing immediately
+                    const isExpanded = dropdownMenu.classList.toggle('show');
+                    profileTrigger.setAttribute('aria-expanded', isExpanded);
+                });
+
+                // Close dropdown if clicked outside
+                window.addEventListener('click', (event) => {
+                    if (dropdownMenu.classList.contains('show') && !profileTrigger.contains(event.target)) {
+                        dropdownMenu.classList.remove('show');
+                        profileTrigger.setAttribute('aria-expanded', 'false');
+                    }
+                });
+            }
+        });
 // Header scroll effect
 window.addEventListener('scroll', function() {
     const header = document.querySelector('header');
