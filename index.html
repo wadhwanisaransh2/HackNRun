@@ -1,5 +1,4 @@
-
-    <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -15,7 +14,7 @@
     <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
     
     <style>
-       :root {
+        :root {
             --primary: #4e32d5; /* Deep Violet */
             --primary-light: #7259f9; /* Lavender */
             --primary-lighter: #a993ff; /* Pale Purple */
@@ -31,13 +30,6 @@
             --dark: #1f014b; /* Dark text for contrast */
             --text: #3c126d; /* Lighter dark text */
             --card-bg: rgba(255, 255, 255, 0.95); /* Slightly less transparent */
-            
-            --math-color: #00bcd4;
-            --physics-color: #ff478c;
-            --chemistry-color: #4e32d5;
-            --biology-color: #70e000;
-            --tech-color: #1b006a;
-            --stats-color: #7259f9;
         }
         
         * {
@@ -54,10 +46,12 @@
             color: var(--text);
             min-height: 100vh;
             display: flex;
+            flex-direction: column; 
             align-items: center;
             justify-content: center;
             overflow-x: hidden;
             position: relative;
+            padding: 2rem 0; 
         }
         
         @keyframes gradient-shift {
@@ -71,6 +65,7 @@
             width: 100%;
             height: 100%;
             z-index: 1;
+            /* This div should be transparent to show the body background */
         }
         
         .floating-shapes {
@@ -278,7 +273,6 @@
         }
         
         .auth-features i {
-            /* color: var(--accent-light); */
             color:var(--light-bg);
             font-size: 1.6rem;
             margin-right: 15px;
@@ -350,9 +344,40 @@
             box-shadow: 0 0 0 3px rgba(78, 50, 213, 0.2);
         }
         
+        .role-switch-container {
+            margin-bottom: 1.5rem; 
+            z-index: 2;
+        }
+        .role-switch {
+            display: flex;
+            background-color: rgba(27, 0, 106, 0.5); 
+            border-radius: 12px;
+            padding: 5px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+        }
+        .role-btn {
+            border: none;
+            padding: 1.2rem 2.5rem;
+            font-size: 1.5rem;
+            font-weight: 600;
+            cursor: pointer;
+            background-color: transparent;
+            color: var(--white);
+            opacity: 0.7;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+        .role-btn.active {
+            background: linear-gradient(to right, var(--primary), var(--primary-light));
+            color: var(--white);
+            opacity: 1;
+            box-shadow: 0 5px 15px rgba(78, 50, 213, 0.3);
+        }
+        
         .auth-tabs {
             display: flex;
-            margin-bottom: 3rem;
+            margin-bottom: 2rem;
             border-bottom: 2px solid rgba(78, 50, 213, 0.2);
             position: relative;
         }
@@ -527,7 +552,6 @@
         .submit-btn {
             width: 100%;
             padding: 1.4rem;
-            /* background: linear-gradient(to right, var(--accent), var(--secondary)); */
            background: linear-gradient(to right, var(--primary), var(--primary-light));
             color: var(--white);
             border: none;
@@ -571,7 +595,6 @@
         .social-login {
             margin-top: 3rem;
             text-align: center;
-            
         }
         
         .social-login p {
@@ -645,17 +668,10 @@
             opacity: 1;
         }
         
-        .social-icon:nth-child(1):hover {
-            background: linear-gradient(to bottom, #db4437, #a8241a);
-        }
-        
-        .social-icon:nth-child(2):hover {
-            background: linear-gradient(to bottom, #4267B2, #29487d);
-        }
-        
-        .social-icon:nth-child(3):hover {
-            background: linear-gradient(to bottom, #1DA1F2, #0c85d0);
-        }  
+        .social-icon:nth-child(1):hover { background: linear-gradient(to bottom, #db4437, #a8241a); }
+        .social-icon:nth-child(2):hover { background: linear-gradient(to bottom, #4267B2, #29487d); }
+        .social-icon:nth-child(3):hover { background: linear-gradient(to bottom, #1DA1F2, #0c85d0); }  
+
         .demo-access {
             margin-top: 2.5rem;
             text-align: center;
@@ -663,7 +679,7 @@
             background: linear-gradient(to right, rgba(78, 50, 213, 0.1), rgba(0, 188, 212, 0.1));
             border-radius: 16px;
             border: 1px solid rgba(78, 50, 213, 0.2);
-        }       
+        }      
         .demo-access p {
             margin-bottom: 1rem;
             color: var(--dark);
@@ -689,7 +705,6 @@
             box-shadow: 0 12px 25px rgba(78, 50, 213, 0.4);
         }
         
-        /* Loading animation */
         .loading {
             display: inline-block;
             width: 20px;
@@ -701,11 +716,8 @@
             margin-left: 10px;
         }
         
-        @keyframes spin {
-            to { transform: rotate(360deg); }
-        }
+        @keyframes spin { to { transform: rotate(360deg); } }
         
-        /* Responsive Design */
         @media (max-width: 1100px) {
             .auth-container {
                 flex-direction: column;
@@ -713,90 +725,29 @@
                 max-width: 600px;
                 min-height: auto;
             }
-            
-            .auth-left {
-                padding: 2.5rem;
-                text-align: center;
-            }
-            
-            .auth-logo {
-                justify-content: center;
-            }
-            
-            .auth-features li {
-                justify-content: center;
-            }
-            
-            .language-selector {
-                position: relative;
-                top: 0;
-                right: 0;
-                justify-content: center;
-                margin-bottom: 1.5rem;
-            }
+            .auth-left { padding: 2.5rem; text-align: center; }
+            .auth-logo { justify-content: center; }
+            .auth-features li { justify-content: center; }
+            .auth-right .language-selector { display: none; }
         }
         
         @media (max-width: 576px) {
-            .auth-container {
-                width: 95%;
-                border-radius: 20px;
-            }
-            
-            .auth-left, .auth-right {
-                padding: 2rem;
-            }
-            
-            .auth-tabs {
-                justify-content: center;
-            }
-            
-            .auth-tab {
-                padding: 1rem 1.5rem;
-                font-size: 1.1rem;
-            }
-            
-            .auth-logo h1 {
-                font-size: 2.2rem;
-            }
-            
-            .auth-left h2 {
-                font-size: 2rem;
-            }
-            
-            .auth-features li {
-                flex-direction: column;
-                text-align: center;
-                padding: 1.5rem 1rem;
-            }
-            
-            .auth-features i {
-                margin-right: 0;
-                margin-bottom: 1rem;
-            }
-            
-            .form-options {
-                flex-direction: column;
-                gap: 1rem;
-                align-items: flex-start;
-            }
-            
-            .social-icons {
-                flex-wrap: wrap;
-            }
-            
-            .form-input {
-                padding: 1.2rem 1.5rem 1.2rem 45px;
-            }            
-            .input-icon {
-                left: 15px;
-            }    
-            .password-toggle {
-                right: 15px;
-            }
+            body { padding: 1rem 0; }
+            .auth-container { width: 95%; border-radius: 20px; }
+            .auth-left, .auth-right { padding: 2rem; }
+            .auth-tabs { justify-content: center; }
+            .auth-tab { padding: 1rem 1.5rem; font-size: 1.1rem; }
+            .auth-logo h1 { font-size: 2.2rem; }
+            .auth-left h2 { font-size: 2rem; }
+            .auth-features li { flex-direction: column; text-align: center; padding: 1.5rem 1rem; }
+            .auth-features i { margin-right: 0; margin-bottom: 1rem; }
+            .form-options { flex-direction: column; gap: 1rem; align-items: flex-start; }
+            .social-icons { flex-wrap: wrap; }
+            .form-input { padding: 1.2rem 1.5rem 1.2rem 45px; }          
+            .input-icon { left: 15px; }   
+            .password-toggle { right: 15px; }
         }
-        .fas{
-            font-size: 2rem;
-        } 
+        .fas{ font-size: 2rem; } 
     </style>
 </head>
 <body>
@@ -808,6 +759,13 @@
     </div>
     <div class="aurora"></div>
     
+    <div class="role-switch-container">
+        <div class="role-switch">
+            <button type="button" class="role-btn active" data-role="student">Student</button>
+            <button type="button" class="role-btn" data-role="teacher">Teacher</button>
+        </div>
+    </div>
+
     <div class="auth-container">
         <div class="auth-left">
             <div class="auth-left-content">
@@ -850,14 +808,12 @@
                     <label for="login-email">Email or Username</label>
                     <i class="fas fa-user input-icon"></i>
                 </div>
-                
                 <div class="form-group">
                     <input type="password" id="login-password" class="form-input" placeholder=" " required>
                     <label for="login-password">Password</label>
                     <i class="fas fa-lock input-icon"></i>
                     <i class="fas fa-eye password-toggle"></i>
                 </div>
-                
                 <div class="form-options">
                     <div class="remember-me">
                         <input type="checkbox" id="remember">
@@ -865,9 +821,7 @@
                     </div>
                     <a href="#" class="forgot-password">Forgot Password?</a>
                 </div>
-                
                 <button type="submit" class="submit-btn">Login to Your Account</button>
-                
                 <div class="social-login">
                     <p>Or login with</p>
                     <div class="social-icons">
@@ -876,7 +830,6 @@
                         <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
                     </div>
                 </div>
-                
                 <div class="demo-access">
                     <p>Want to explore first? Try our demo</p>
                     <button type="button" class="demo-btn">Access Demo</button>
@@ -889,35 +842,29 @@
                     <label for="signup-name">Full Name</label>
                     <i class="fas fa-user input-icon"></i>
                 </div>
-                
                 <div class="form-group">
                     <input type="email" id="signup-email" class="form-input" placeholder=" " required>
                     <label for="signup-email">Email Address</label>
                     <i class="fas fa-envelope input-icon"></i>
                 </div>
-                
                 <div class="form-group">
                     <input type="password" id="signup-password" class="form-input" placeholder=" " required>
                     <label for="signup-password">Create Password</label>
                     <i class="fas fa-lock input-icon"></i>
                     <i class="fas fa-eye password-toggle"></i>
                 </div>
-                
                 <div class="form-group">
                     <input type="password" id="signup-confirm" class="form-input" placeholder=" " required>
                     <label for="signup-confirm">Confirm Password</label>
                     <i class="fas fa-lock input-icon"></i>
                 </div>
-                
                 <div class="form-options">
                     <div class="remember-me">
                         <input type="checkbox" id="terms">
                         <label for="terms">I agree to the Terms & Conditions</label>
                     </div>
                 </div>
-                
                 <button type="submit" class="submit-btn">Create Account</button>
-                
             </form>
         </div>
     </div>
@@ -925,16 +872,14 @@
     <script>
         // Initialize Particles.js
         particlesJS('particles-js', {
-            particles: { number: { value: 60, density: { enable: true, value_area: 800 } }, color: { value: "#ffffff" }, shape: { type: "circle" }, opacity: { value: 0.5, random: true }, size: { value: 3, random: true }, line_linked: { enable: false }, move: { enable: true, speed: 1, direction: "none", random: true, straight: false, out_mode: "out" } },
-            interactivity: { detect_on: "canvas", events: { onhover: { enable: true, mode: "bubble" }, onclick: { enable: true, mode: "repulse" } }, modes: { bubble: { distance: 250, size: 0, duration: 2, opacity: 0, speed: 3 }, repulse: { distance: 400, duration: 0.4 } } },
-            retina_detect: true
+            "particles": { "number": { "value": 60, "density": { "enable": true, "value_area": 800 } }, "color": { "value": "#ffffff" }, "shape": { "type": "circle" }, "opacity": { "value": 0.5, "random": true }, "size": { "value": 3, "random": true }, "line_linked": { "enable": false }, "move": { "enable": true, "speed": 1, "direction": "none", "random": true, "straight": false, "out_mode": "out" } },
+            "interactivity": { "detect_on": "canvas", "events": { "onhover": { "enable": true, "mode": "bubble" }, "onclick": { "enable": true, "mode": "repulse" } }, "modes": { "bubble": { "distance": 250, "size": 0, "duration": 2, "opacity": 0, "speed": 3 }, "repulse": { "distance": 400, "duration": 0.4 } } },
+            "retina_detect": true
         });
 
-        // Tab switching functionality
         const tabs = document.querySelectorAll('.auth-tab');
         const forms = document.querySelectorAll('.auth-form');
         const indicator = document.querySelector('.auth-tab-indicator');
-        
         function setIndicatorPosition() {
             const activeTab = document.querySelector('.auth-tab.active');
             if (activeTab) {
@@ -942,10 +887,8 @@
                 indicator.style.left = `${activeTab.offsetLeft}px`;
             }
         }
-        
         window.addEventListener('load', setIndicatorPosition);
         window.addEventListener('resize', setIndicatorPosition);
-        
         tabs.forEach(tab => {
             tab.addEventListener('click', () => {
                 const tabId = tab.getAttribute('data-tab');
@@ -961,7 +904,6 @@
             });
         });
 
-        // Password visibility toggle
         document.querySelectorAll('.password-toggle').forEach(toggle => {
             toggle.addEventListener('click', () => {
                 const input = toggle.parentElement.querySelector('input');
@@ -977,51 +919,73 @@
             });
         });
 
-        // ===============================================
-        // == NEW: LOGIN FUNCTIONALITY IMPLEMENTATION ==
-        // ===============================================
-        document.getElementById('login-form').addEventListener('submit', function(e) {
-            e.preventDefault(); // Prevent the form from submitting the traditional way
+        const roleSwitchBtns = document.querySelectorAll('.role-btn');
+        const leftPanelTitle = document.querySelector('.auth-left h2');
+        const leftPanelDescription = document.querySelector('.auth-left p');
+        const leftPanelFeatures = document.querySelector('.auth-features');
+        const loginSubmitBtn = document.querySelector('#login-form .submit-btn');
+        const signupSubmitBtn = document.querySelector('#signup-form .submit-btn');
+        const content = {
+            student: {
+                title: "Transform Learning Into an Adventure!",
+                description: "Join our gamified learning platform designed for rural students. Access STEM education through interactive games and multilingual content.",
+                features: `<li><i class="fas fa-gamepad"></i><span>Interactive Game-Based Learning</span></li><li><i class="fas fa-globe"></i><span>Multilingual Content Library</span></li><li><i class="fas fa-wifi"></i><span>Smart Offline Mode</span></li><li><i class="fas fa-chart-line"></i><span>Real-Time Progress Analytics</span></li>`,
+                loginBtn: "Login to Your Account",
+                signupBtn: "Create Student Account"
+            },
+            teacher: {
+                title: "Empower Your Teaching with Modern Tools!",
+                description: "Access the teacher's dashboard to manage classes, track student progress, and create engaging learning modules.",
+                features: `<li><i class="fas fa-users"></i><span>Manage Student Groups</span></li><li><i class="fas fa-tasks"></i><span>Assign Custom Quizzes</span></li><li><i class="fas fa-chart-bar"></i><span>Detailed Performance Reports</span></li><li><i class="fas fa-book-open"></i><span>Curate Learning Content</span></li>`,
+                loginBtn: "Login to Teacher Dashboard",
+                signupBtn: "Create Teacher Account"
+            }
+        };
+        roleSwitchBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                roleSwitchBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                const role = btn.getAttribute('data-role');
+                leftPanelTitle.textContent = content[role].title;
+                leftPanelDescription.textContent = content[role].description;
+                leftPanelFeatures.innerHTML = content[role].features;
+                loginSubmitBtn.textContent = content[role].loginBtn;
+                signupSubmitBtn.textContent = content[role].signupBtn;
+            });
+        });
 
+        document.getElementById('login-form').addEventListener('submit', function(e) {
+            e.preventDefault();
             const emailInput = document.getElementById('login-email').value;
             const passwordInput = document.getElementById('login-password').value;
             const btn = this.querySelector('.submit-btn');
             const originalText = btn.textContent;
-
             btn.innerHTML = 'Logging in... <span class="loading"></span>';
             btn.disabled = true;
-            // Simulate network delay for better UX
             setTimeout(() => {
-                // Check for the specific credentials
                 if (emailInput === 'hacknrun@.org' && passwordInput === '12345678') {
                     alert('Login Successful! Welcome back.');
-                    // Redirect to the index.html page
                     window.location.href = 'home.html'; 
                 } else {
-                    // Show error message for incorrect credentials
                     alert('Invalid email or password. Please try again.');
                     btn.innerHTML = originalText;
                     btn.disabled = false;
                 }
-            }, 1000); // 1-second delay
+            }, 1000);
         });
 
-        // Signup form simulation (optional, keeps the UI consistent)
         document.getElementById('signup-form').addEventListener('submit', function(e) {
             e.preventDefault();
             const btn = this.querySelector('.submit-btn');
             const originalText = btn.textContent;
-            
             btn.innerHTML = 'Creating Account... <span class="loading"></span>';
             btn.disabled = true;
-            
             setTimeout(() => {
                 btn.innerHTML = originalText;
                 btn.disabled = false;
                 alert('Signup functionality is for demonstration!');
             }, 2000);
         });
-
     </script>
 </body>
 </html>
