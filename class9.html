@@ -527,6 +527,22 @@
             display: flex;
             align-items: center;
         }
+             #full-logo .logo-icon{
+            list-style-type: none;
+            text-decoration: none;
+            font-size:2.5rem;
+            margin-right: 15px;
+            color: var(--secondary);
+            filter: drop-shadow(0 0 10px var(--secondary));
+            animation: float 5s infinite ease-in-out;
+        
+}      
+   @keyframes float {
+  0% { transform: translateY(0px) translateX(0px) rotate(0deg) scale(1); }
+     33% { transform: translateY(-40px) translateX(60px) rotate(120deg) scale(1.1); }
+     66% { transform: translateY(30px) translateX(60px) rotate(240deg) scale(1.2); }
+     100% { transform: translateY(-7px) translateX(12px) rotate(360deg) scale(1.3); }
+        }
     </style>
 </head>
 <body>
@@ -535,7 +551,7 @@
 
     <header>
         <div class="header-container">
-            <a href="index.html" class="logo">
+            <a style="text-decoration: none;" href="index.html" class="logo">
                 <div id="full-logo">
                     <i class="fas fa-graduation-cap logo-icon"></i>
                     <h1>Hack<span>NRun</span></h1>

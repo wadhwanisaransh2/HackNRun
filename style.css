@@ -1452,3 +1452,17 @@ body.dark-mode .swiper-slide, body.dark-mode .class-card, body.dark-mode .subjec
 #full-logo{
     display: flex;
 }
+#full-logo .logo-icon{
+            font-size:2.5rem;
+            margin-right: 15px;
+            color: var(--secondary);
+            filter: drop-shadow(0 0 10px var(--secondary));
+            animation: float 5s infinite ease-in-out;
+        
+}      
+   @keyframes float {
+  0% { transform: translateY(0px) translateX(0px) rotate(0deg) scale(1); }
+     33% { transform: translateY(-30px) translateX(40px) rotate(120deg) scale(1.1); }
+     66% { transform: translateY(30px) translateX(30px) rotate(240deg) scale(1.2); }
+     100% { transform: translateY(22px) translateX(12px) rotate(360deg) scale(1.4); }
+        }
