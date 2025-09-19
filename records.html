@@ -83,14 +83,14 @@
             overflow-y: auto;
         }
 
-        .logo {
+        .auth-logo {
             display: flex;
             align-items: center;
             margin-bottom: 2.5rem;
         }
 
-        .logo i {
-            font-size: 2.2rem;
+        .auth-logo i {
+            font-size: 2.5rem;
             color: var(--primary-light);
             margin-right: 12px;
         }
@@ -775,6 +775,32 @@
         .stat-card:nth-child(5) { animation-delay: 0.4s; }
         .stat-card:nth-child(6) { animation-delay: 0.5s; }
 
+
+        #full-logo{
+    display: flex;
+}
+#full-logo .auth-logo-icon{
+            font-size:2.5rem;
+            margin-right: 15px;
+            color: var(--secondary);
+            filter: drop-shadow(0 0 10px var(--secondary));
+            animation: float 5s infinite ease-in-out;
+        
+}      
+.auth-logo .fas{
+    font-size:2.5rem;
+            margin-right: 15px;
+            color: var(--secondary);
+            filter: drop-shadow(0 0 10px var(--secondary));
+            animation: float 5s infinite ease-in-out;
+        
+}
+   @keyframes float {
+  0% { transform: translateY(-12px) translateX(0px) rotate(0deg) scale(1); }
+     33% { transform: translateY(-30px) translateX(40px) rotate(120deg) scale(1.1); }
+     66% { transform: translateY(30px) translateX(30px) rotate(240deg) scale(1.2); }
+     100% { transform: translateY(-12px) translateX(12px) rotate(360deg) scale(1.4); }
+        }
     </style>
 </head>
 <body>
@@ -782,11 +808,11 @@
     
     <div class="app-container">
         <div class="sidebar">
-            <div class="logo">
-                <i class="fas fa-graduation-cap"></i>
-                <h1>EduAnalytics</h1>
-            </div>
-            
+             <div class="auth-logo">
+                    <i class="fas fa-graduation-cap auth-logo-icon"></i>
+                    <h1>Hack<span>NRun</span></h1>
+                </div>
+
             <div class="menu-title">Main</div>
             <div class="menu-item active">
                 <i class="fas fa-home"></i>
@@ -794,7 +820,7 @@
             </div>
             <div class="menu-item">
                 <i class="fas fa-user-graduate"></i>
-                <span>Students</span>
+                <a style="color: white; text-decoration: none;" href="leaderboard.html"><span>Dashboard</span></a>
                 <span class="menu-badge">142</span>
             </div>
             <div class="menu-item">
