@@ -55,7 +55,6 @@ var typed = new Typed('#typed-text', {
     showCursor: true,
     cursorChar: '|'
 });
-
 // Initialize Swiper
 var swiper = new Swiper(".testimonialsSwiper", {
     slidesPerView: 1,
