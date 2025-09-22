@@ -4,7 +4,6 @@ AOS.init({
     once: true,
     offset: 100
 });
-
 // Initialize Particles.js
 particlesJS('particles-js', {
     particles: {
