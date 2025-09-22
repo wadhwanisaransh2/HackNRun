@@ -116,8 +116,7 @@ mobileMenuBtn.addEventListener('click', () => {
                     }
                 });
             }
-        });
-// Header scroll effect
+        });// Header scroll effect
 window.addEventListener('scroll', function() {
     const header = document.querySelector('header');
     if (window.scrollY > 50) {
